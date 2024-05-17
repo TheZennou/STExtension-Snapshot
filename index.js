@@ -1,13 +1,13 @@
-// Function to load dom-to-image dynamically, gonna replace this later
+//There is probably a better way to get the current user but... enh.
 function getUserDirectory() {
     const pathParts = location.pathname.split('/');
-    const userDirectoryIndex = pathParts.indexOf('data') + 1;
-    if (userDirectoryIndex >= 0 && userDirectoryIndex < pathParts.length) {
-        return pathParts[userDirectoryIndex];
+    const dataIndex = pathParts.indexOf('data');
+    if (dataIndex !== -1 && dataIndex + 1 < pathParts.length) {
+        return pathParts[dataIndex + 1];
     }
     return 'default-user';
 }
-
+// Function to load dom-to-image dynamically, gonna replace this later
 function loadDomToImage() {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');

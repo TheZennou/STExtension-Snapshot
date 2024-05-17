@@ -9,7 +9,7 @@ function loadDomToImage() {
     });
 }
 
-import { registerSlashCommand } from '../../slash-commands.js';
+import { registerSlashCommand } from '../../../../public/scripts/slash-commands.js';
 
 const extensionName = "Snapshot";
 

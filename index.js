@@ -2,7 +2,7 @@
 function loadDomToImage() {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = 'scripts/extensions/snapshot/dom-to-image-more.min.js';
+        script.src = '../../../extensions/STExtension-Snapshot/dom-to-image-more.min.js';
         script.onload = () => resolve(window.domtoimage);
         script.onerror = () => reject(new Error('Failed to load dom-to-image'));
         document.head.appendChild(script);

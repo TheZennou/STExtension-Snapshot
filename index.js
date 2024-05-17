@@ -1,24 +1,5 @@
 //There is probably a better way to get the current user but... enh.
-function getUserDirectory() {
-    const pathParts = location.pathname.split('/');
-    const dataIndex = pathParts.indexOf('data');
-    if (dataIndex !== -1 && dataIndex + 1 < pathParts.length) {
-        return pathParts[dataIndex + 1];
-    }
-    return 'default-user';
-}
-// Function to load dom-to-image dynamically, gonna replace this later
-function loadDomToImage() {
-    return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        const userDirectory = getUserDirectory();
-        script.src = `/data/${userDirectory}/extensions/STExtension-Snapshot/dom-to-image-more.min.js`;
-        script.onload = () => resolve(window.domtoimage);
-        script.onerror = () => reject(new Error('Failed to load dom-to-image'));
-        document.head.appendChild(script);
-    });
-}
-
+import domtoimage from 'https://esm.sh/dom-to-image-more';
 import { registerSlashCommand } from '/scripts/slash-commands.js';
 
 const extensionName = "Snapshot";
@@ -31,7 +12,6 @@ async function captureChatLog(format = 'regular') {
     }
 
     try {
-        const domtoimage = await loadDomToImage();
 
         // Creatin a new container element
         const captureContainer = document.createElement('div');

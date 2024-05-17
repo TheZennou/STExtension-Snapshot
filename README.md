@@ -10,4 +10,4 @@ You can trigger a snapshot through the two buttons in the extensions menu, or by
 
 Thanks to dom-to-image-more!
 
-https://youtu.be/4koCpY4iYhI?si=1jbAnNNJeY3_ZP6E
+My soundtrack while making this: https://youtu.be/4koCpY4iYhI?si=1jbAnNNJeY3_ZP6E

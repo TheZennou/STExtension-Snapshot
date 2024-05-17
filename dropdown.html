@@ -1,0 +1,23 @@
+<div class="chatlog-snapshot-settings">
+    <div class="inline-drawer">
+        <div class="inline-drawer-toggle inline-drawer-header" title="Settings for Chat Log Snapshot Extension">
+            <b>Chat Log Snapshot</b>
+            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+        </div>
+        <div class="inline-drawer-content">
+            <div class="chatlog-snapshot-block flex-container">
+                <button id="chatlogButton" class="btn btn-primary">Snapshot</button>
+                <button id="gridChatlogButton" class="btn btn-primary">Snapshot Grid</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('chatlogButton').addEventListener('click', () => {
+        captureChatLog();
+    });
+    
+    document.getElementById('gridChatlogButton').addEventListener('click', () => {
+        captureChatLog();
+    });
+</script>

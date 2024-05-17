@@ -1,0 +1,15 @@
+{
+    "display_name": "Snapshot",
+    "loading_order": 7,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "author": "YourName",
+    "version": "1.0.0",
+    "homePage": "https://github.com/YourGitHub/SillyTavern",
+    "permissions": ["activeTab"],
+    "web_accessible_resources": [
+        "html2canvas.js"
+    ]
+}

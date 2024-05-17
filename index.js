@@ -1,8 +1,15 @@
 // Function to load dom-to-image dynamically, gonna replace this later
+function getUserDirectory() {
+    const pathParts = location.pathname.split('/');
+    const userDirectoryIndex = pathParts.indexOf('data') + 1;
+    return pathParts[userDirectoryIndex];
+}
+
 function loadDomToImage() {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = '../../../extensions/STExtension-Snapshot/dom-to-image-more.min.js';
+        const userDirectory = getUserDirectory();
+        script.src = `/data/${userDirectory}/extensions/STExtension-Snapshot/dom-to-image-more.min.js`;
         script.onload = () => resolve(window.domtoimage);
         script.onerror = () => reject(new Error('Failed to load dom-to-image'));
         document.head.appendChild(script);

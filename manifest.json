@@ -5,11 +5,8 @@
     "optional": [],
     "js": "index.js",
     "css": "style.css",
-    "author": "YourName",
+    "author": "Zennou",
     "version": "1.0.0",
-    "homePage": "https://github.com/YourGitHub/SillyTavern",
-    "permissions": ["activeTab"],
-    "web_accessible_resources": [
-        "html2canvas.js"
+    "homePage": "https://github.com/TheZennou/STExtension-Snapshot",
     ]
 }

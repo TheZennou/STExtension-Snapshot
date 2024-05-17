@@ -2,7 +2,10 @@
 function getUserDirectory() {
     const pathParts = location.pathname.split('/');
     const userDirectoryIndex = pathParts.indexOf('data') + 1;
-    return pathParts[userDirectoryIndex];
+    if (userDirectoryIndex >= 0 && userDirectoryIndex < pathParts.length) {
+        return pathParts[userDirectoryIndex];
+    }
+    return 'default-user';
 }
 
 function loadDomToImage() {

@@ -13,7 +13,9 @@ Has two modes,
 1. "regular" which creates a long vertical list of the messages, pretty much a giant version of what you see in SillyTavern.
 2. "grid" which makes a column based grid of messages in a rectangular shape.
 
-You can trigger a snapshot through the two buttons in the extensions menu, or by typing /snapshot {optional: format=grid}, {optional: range=1-10}, {optional: anonymize=true}.
+You can trigger a snapshot through the two buttons in the extensions menu.
+Additonally a command version is provided /snapshot {optional: format=grid}, {optional: range=1-10}, {optional: anonymize=true}.
+(Command version was added solely to make ross happy)
 
 Additonal features:
 - Ability to specify a range of messages to be captured i.e. (11-42)

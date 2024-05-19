@@ -14,9 +14,9 @@ Additonal features:
 - Anonymize {{user}}
 
 Showcase:
-![Showcase](https://i.imgur.com/qyDsDH0.gif)
+![Showcase](https://i.imgur.com/WjYW3kC.gif)
 Anonmyize Showcase:
-![Anonymize Showcase](https://i.imgur.com/jlU7yNe.gif)
+![Anonymize Showcase](https://i.imgur.com/cDLJSer.gif)
 Range Showcase
 ![Range Showcase](https://i.imgur.com/5UMkYR9.gif)
 

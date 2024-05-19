@@ -2,6 +2,13 @@
 Takes a snapshot of the current chat and makes an image of it for easy sharing.
 All styling is respected, and the width of the messages is decided by your chat width, for narrower/longer message blocks in the resulting image, turn up or down your chat width! 
 ***
+## Tutorial:
+https://i.imgur.com/X8EWaP2.png
+Open Extensions Menu
+Open "Install Extenstion"
+Paste the extension link: "https://github.com/TheZennou/STExtension-Snapshot"
+Click Save, and you're done! :)
+***
 Has two modes, 
 1. "regular" which creates a long vertical list of the messages, pretty much a giant version of what you see in SillyTavern.
 2. "grid" which makes a column based grid of messages in a rectangular shape.

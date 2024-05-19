@@ -1,7 +1,9 @@
 //Snapshot Javascript Code
 //There is probably a better way to get the current user but... enh.
 import domtoimage from 'https://esm.sh/dom-to-image-more';
-import { registerSlashCommand } from '/scripts/slash-commands.js';
+import { SlashCommandParser } from '/scripts/slash-commands/SlashCommandParser.js';
+import { SlashCommand } from '/scripts/slash-commands/SlashCommand.js';
+import { ARGUMENT_TYPE, SlashCommandArgument, SlashCommandNamedArgument } from '/scripts/slash-commands/SlashCommandArgument.js';
 import { callPopup } from '/script.js';
 
 
@@ -39,7 +41,7 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
     }
 
     try {
-        // Creating a new container element
+        // Creatin a new container element
         const captureContainer = document.createElement('div');
         captureContainer.style.backgroundColor = window.getComputedStyle(chatContainer).backgroundColor;
         
@@ -101,7 +103,6 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
                     anonymizeUserData(clonedElement, userName);
                 }
                 
-                // Check if mobile mode is enabled and set a fixed width for cloned elements
                 if (useMobileMode) {
                     clonedElement.style.width = mobileWidth;
                 }
@@ -208,27 +209,60 @@ function addCaptureButton() {
     const snapshotButton = $('#snapshot_extension');
     snapshotButton.on('click', openSnapshotMenu);
 }
+
 jQuery(function () {
     addCaptureButton();
-    registerSlashCommand('snapshot', (_, ...args) => {
-        let format = 'regular';
-        let messageRange = null;
-        let anonymizeUser = false;
 
-        if (args.length > 0) {
-            format = args[0];
-        }
-        if (args.length > 1) {
-            messageRange = args[1];
-        }
-        if (args.length > 2) {
-            anonymizeUser = args[2] === 'true' || args[2] === 'anonymize';
-        }
-
-        if (format !== 'regular' && format !== 'grid') {
-            format = 'regular';
-        }
-
-        captureChatLog(format, messageRange, anonymizeUser);
-    }, ['snapshot'], "<span class='monospace'>(optional: 'grid' or 'regular') (optional: message range, e.g., '1-10') (optional: 'true' or 'anonymize')</span> – captures an image of the entire chat log", true, true);
+    SlashCommandParser.addCommandObject(SlashCommand.fromProps({
+        name: 'snapshot',
+        callback: (namedArgs, unnamedArgs) => {
+            const format = namedArgs.format ?? 'regular';
+            const messageRange = namedArgs.range ?? null;
+            const anonymizeUser = namedArgs.anonymize === 'on' || namedArgs.anonymize === 'true';
+            captureChatLog(format, messageRange, anonymizeUser);
+        },
+        aliases: ['snapshot'],
+        returns: 'nothing (captures an image of the chat log)',
+        namedArgumentList: [
+            SlashCommandNamedArgument.fromProps({
+                name: 'format',
+                description: 'the format of the snapshot',
+                typeList: ARGUMENT_TYPE.STRING,
+                defaultValue: 'regular',
+                enumList: ['regular', 'grid'],
+            }),
+            SlashCommandNamedArgument.fromProps({
+                name: 'range',
+                description: 'the range of messages to include (e.g., "1-10")',
+                typeList: ARGUMENT_TYPE.STRING,
+                defaultValue: null,
+            }),
+            SlashCommandNamedArgument.fromProps({
+                name: 'anonymize',
+                description: 'whether to anonymize user data',
+                typeList: ARGUMENT_TYPE.BOOLEAN,
+                defaultValue: 'false',
+                enumList: ['true', 'false'],
+            }),
+        ],
+        unnamedArgumentList: [],
+        helpString: `
+            <div>
+                Captures an image of the chat log.
+            </div>
+            <div>
+                <strong>Example:</strong>
+                <ul>
+                    <li>
+                        <pre><code class="language-stscript">/snapshot</code></pre>
+                        captures the entire chat log in regular format
+                    </li>
+                    <li>
+                        <pre><code class="language-stscript">/snapshot format=grid range=1-10 anonymize=on</code></pre>
+                        captures messages 1-10 in grid format with user data anonymized
+                    </li>
+                </ul>
+            </div>
+        `,
+    }));
 });

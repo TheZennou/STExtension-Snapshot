@@ -211,6 +211,11 @@ function addCaptureButton() {
 
 jQuery(function () {
     addCaptureButton();
-    registerSlashCommand('snapshot', (_, format = 'regular', messageRange = null, anonymizeUser = false) => captureChatLog(format, messageRange, anonymizeUser), ['snapshot'], "<span class='monospace'>(optional: 'grid' or 'regular') (optional: message range, e.g., '1-10') (optional: 'anonymize')</span> – captures an image of the entire chat log", true, true);
-    console.log(`${extensionName} extension loaded.`);
+    registerSlashCommand('snapshot', (_, format = 'regular', messageRange = null, anonymizeUser = false) => {
+        if (format !== 'regular' && format !== 'grid') {
+            format = 'regular';
+        }
+        anonymizeUser = anonymizeUser === 'true' || anonymizeUser === 'anonymize';
+        captureChatLog(format, messageRange, anonymizeUser);
+    }, ['snapshot'], "<span class='monospace'>(optional: 'grid' or 'regular') (optional: message range, e.g., '1-10') (optional: 'true' or 'anonymize')</span> – captures an image of the entire chat log", true, true);
 });

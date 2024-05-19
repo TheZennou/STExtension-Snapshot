@@ -2,3 +2,37 @@
     cursor: pointer;
     align-items: left;
 }
+
+.snapshot-button {
+    width: auto;
+    color: var(--SmartThemeBodyColor);
+    background-color: var(--black50a);
+    border: 1px solid var(--SmartThemeBorderColor);
+    border-radius: 5px;
+    padding: 3px 5px;
+    cursor: pointer;
+    margin: 5px 0;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.snapshot-button i {
+    margin-right: 2px;
+	align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.snapshot-range-input {
+    background-color: var(--black30a);
+    color: var(--SmartThemeBodyColor);
+    border: 1px solid var(--SmartThemeBorderColor);
+    border-radius: 5px;
+    font-family: "Noto Sans", "Noto Color Emoji", sans-serif;
+    padding: 3px 5px;
+    margin: 5px 0;
+    height: fit-content;
+}

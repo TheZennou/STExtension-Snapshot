@@ -41,7 +41,7 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
     }
 
     try {
-        // Creatin a new container element
+        // Create a new container element
         const captureContainer = document.createElement('div');
         captureContainer.style.backgroundColor = window.getComputedStyle(chatContainer).backgroundColor;
         
@@ -63,6 +63,18 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
             }
         }
         
+        // Custom styles for timestamp elements
+        const timestampStyle = document.createElement('style');
+        timestampStyle.innerHTML = `
+            .timestamp {
+                font-size: 12px;
+                font-weight: 400;
+                white-space: nowrap;
+                margin-left: 5px;
+            }
+        `;
+        document.head.appendChild(timestampStyle);
+
         let gridContainer;
         if (format === 'grid') {
             const numMessages = messageElements.length;
@@ -115,11 +127,14 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
             captureContainer.style.height = 'auto';
             captureContainer.style.overflow = useMobileMode ? 'visible' : 'hidden';
         }
+        
         document.body.appendChild(captureContainer);
         await new Promise(resolve => setTimeout(resolve, 0));
+        
         if (format === 'grid') {
             captureContainer.style.height = `${gridContainer.offsetHeight}px`;
         }
+        
         const imgData = await domtoimage.toPng(captureContainer, {
             width: captureContainer.offsetWidth,
             height: captureContainer.offsetHeight,
@@ -134,13 +149,13 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
         const link = document.createElement('a');
         link.href = imgData;
         link.download = 'chatlog.png';
-		toastr.success('Chat log captured successfully!', 'Success');
+        toastr.success('Chat log captured successfully!', 'Success');
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     } catch (error) {
         console.error("Error capturing chat log:", error);
-		toastr.error('Failed, Please check the browser console. Common issues are no internet, or CORS policy.');
+        toastr.error('Failed, Please check the browser console. Common issues are no internet, or CORS policy.');
     }
 }
 async function openSnapshotMenu() {

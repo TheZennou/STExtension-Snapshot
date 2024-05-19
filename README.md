@@ -2,7 +2,7 @@
 Takes a snapshot of the current chat and makes an image of it for easy sharing.
 All styling is respected, and the width of the messages is decided by your chat width, for narrower/longer message blocks in the resulting image, turn up or down your chat width! 
 ***
-## Tutorial:
+### Tutorial:
 ![tutimage](https://i.imgur.com/X8EWaP2.png)
 1. Open Extensions Menu
 2. Open "Install Extenstion"

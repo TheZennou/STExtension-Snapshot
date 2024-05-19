@@ -15,7 +15,7 @@ Has two modes,
 
 You can trigger a snapshot through the two buttons in the extensions menu.
 
-Additonally a command version is provided /snapshot {optional: format=grid}, {optional: range=1-10}, {optional: anonymize=true}.
+Additonally a command version is provided: /snapshot {optional: format=grid}, {optional: range=1-10}, {optional: anonymize=true}.
 
 (Command version was added solely to make ross happy)
 
@@ -28,7 +28,7 @@ Showcase:
 ![Showcase](https://i.imgur.com/WjYW3kC.gif)
 Anonmyize Showcase:
 ![Anonymize Showcase](https://i.imgur.com/cDLJSer.gif)
-Range Showcase
+Range Showcase:
 ![Range Showcase](https://i.imgur.com/5UMkYR9.gif)
 
 

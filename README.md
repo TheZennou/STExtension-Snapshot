@@ -14,7 +14,9 @@ Has two modes,
 2. "grid" which makes a column based grid of messages in a rectangular shape.
 
 You can trigger a snapshot through the two buttons in the extensions menu.
+
 Additonally a command version is provided /snapshot {optional: format=grid}, {optional: range=1-10}, {optional: anonymize=true}.
+
 (Command version was added solely to make ross happy)
 
 Additonal features:

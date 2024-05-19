@@ -208,14 +208,27 @@ function addCaptureButton() {
     const snapshotButton = $('#snapshot_extension');
     snapshotButton.on('click', openSnapshotMenu);
 }
-
 jQuery(function () {
     addCaptureButton();
-    registerSlashCommand('snapshot', (_, format = 'regular', messageRange = null, anonymizeUser = false) => {
+    registerSlashCommand('snapshot', (_, ...args) => {
+        let format = 'regular';
+        let messageRange = null;
+        let anonymizeUser = false;
+
+        if (args.length > 0) {
+            format = args[0];
+        }
+        if (args.length > 1) {
+            messageRange = args[1];
+        }
+        if (args.length > 2) {
+            anonymizeUser = args[2] === 'true' || args[2] === 'anonymize';
+        }
+
         if (format !== 'regular' && format !== 'grid') {
             format = 'regular';
         }
-        anonymizeUser = anonymizeUser === 'true' || anonymizeUser === 'anonymize';
+
         captureChatLog(format, messageRange, anonymizeUser);
     }, ['snapshot'], "<span class='monospace'>(optional: 'grid' or 'regular') (optional: message range, e.g., '1-10') (optional: 'true' or 'anonymize')</span> – captures an image of the entire chat log", true, true);
 });

@@ -8,7 +8,7 @@ Has two modes,
 
 You can trigger a snapshot through the two buttons in the extensions menu, or by typing /snapshot {optional: grid}.
 
-Future plans for version two (tomorrow)
+Additonal features
 - Ability to specify a range of messages to be captured i.e. (11-42)
 - Mobile compatibility
 - Anonymize {{user}}

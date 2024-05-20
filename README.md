@@ -32,10 +32,10 @@ Range Showcase:
 ![Range Showcase](https://i.imgur.com/5UMkYR9.gif)
 ***
 ### Issues?
-Biggest issues arise from having CORS policy set to strict.
-Big logs can crash mobile browsers, anything over 20k tokens is the danger zone for mobile. (This will improve).
-Outdated ST. The extension relies on having SillyTavern 1.12.0 or newer, please update if you're having issues.
-Still not resolved? Reach out; [Zennou.dev](https://zennou.dev/index.html?p=1)
+- Biggest issues arise from having CORS policy set to strict.
+- Big logs can crash mobile browsers, anything over 20k tokens is the danger zone for mobile. (This will improve).
+- Outdated ST. The extension relies on having SillyTavern 1.12.0 or newer, please update if you're having issues.
+- **Still not resolved? Reach out; [Zennou.dev](https://zennou.dev/index.html?p=1)**
 
 ***
 ### Credits:

@@ -1,6 +1,7 @@
 # STExtension-Snapshot
 Takes a snapshot of the current chat and makes an image of it for easy sharing.
 All styling is respected, and the width of the messages is decided by your chat width, for narrower/longer message blocks in the resulting image, turn up or down your chat width! 
+### This extension does not work on firefox... for now.
 ***
 ### Tutorial:
 ![tutimage](https://i.imgur.com/X8EWaP2.png)

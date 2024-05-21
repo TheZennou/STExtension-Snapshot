@@ -1,7 +1,7 @@
 # STExtension-Snapshot
 Takes a snapshot of the current chat and makes an image of it for easy sharing.
 All styling is respected, and the width of the messages is decided by your chat width, for narrower/longer message blocks in the resulting image, turn up or down your chat width! 
-### This extension does not work on firefox... for now.
+### **Please use an up to date SillyTavern**.
 ***
 ### Tutorial:
 ![tutimage](https://i.imgur.com/X8EWaP2.png)
@@ -22,8 +22,9 @@ Additonally a command version is provided: /snapshot {optional: format=grid}, {o
 
 Additonal features:
 - Ability to specify a range of messages to be captured i.e. (11-42)
-- Mobile compatibility
+- Mobile compatibility (Even big logs!)
 - Anonymize {{user}}
+- Firefox support
 
 Showcase:
 ![Showcase](https://i.imgur.com/WjYW3kC.gif)
@@ -34,12 +35,12 @@ Range Showcase:
 ***
 ### Issues?
 - Biggest issues arise from having CORS policy set to strict.
-- Big logs can crash mobile browsers, anything over 20k tokens is the danger zone for mobile. (This will improve).
 - Outdated ST. The extension relies on having SillyTavern 1.12.0 or newer, please update if you're having issues.
-- **Still not resolved? Reach out; [Zennou.dev](https://zennou.dev/index.html?p=1)**
+- **Still not resolved? Reach out; [Zennou.dev](https://zennou.dev/index.html?p=1) or open an issue.** 
 
 ***
 ### Credits:
-Thanks to dom-to-image-more!
+Thanks to html2canvas.
+Fuck dom-to-image-more.
 
 My soundtrack while making this: https://youtu.be/4koCpY4iYhI?si=1jbAnNNJeY3_ZP6E

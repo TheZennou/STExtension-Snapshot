@@ -23,7 +23,7 @@ Additonally a command version is provided: /snapshot {optional: format=grid}, {o
 Additonal features:
 - Ability to specify a range of messages to be captured i.e. (11-42)
 - Mobile compatibility (Even big logs!)
-- Anonymize {{user}}
+- Anonymize {{user}} and stylesheet.
 - Firefox support
 
 Showcase:

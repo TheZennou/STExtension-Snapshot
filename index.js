@@ -155,7 +155,7 @@ function appendMessageElementsToContainer(container, messageElements, anonymizeU
         container.appendChild(clonedElement);
     });
 }
-//This numbers were gifted to me by god, therefore;
+//These numbers were gifted to me by god, therefore;
 //GOD WILLS IT
 function calculateMaxHeight(messageElements) {
     const numMessages = messageElements.length;

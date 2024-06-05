@@ -13,7 +13,7 @@ let useMobileMode = isMobileDevice;
 
 function anonymizeUserData(element, userName) {
     const isUser = element.getAttribute('is_user') === 'true';
-    
+
     if (isUser) {
         const avatar = element.querySelector('.avatar img');
         if (avatar) {
@@ -76,19 +76,6 @@ function createTimestampStyle() {
     document.head.appendChild(timestampStyle);
 }
 
-function createGridContainer(messageElements) {
-    const numMessages = messageElements.length;
-    const numRows = Math.ceil(Math.sqrt(numMessages));
-    const numColumns = Math.ceil(numMessages / numRows);
-    const gridContainer = document.createElement('div');
-    gridContainer.style.display = 'grid';
-    gridContainer.style.gridTemplateColumns = `repeat(${numColumns}, 1fr)`;
-    gridContainer.style.gridTemplateRows = `repeat(${numRows}, auto)`;
-    gridContainer.style.gridAutoFlow = 'column';
-    gridContainer.style.gridGap = '10px';
-    return gridContainer;
-}
-
 function anonymizeMessageElement(element, userName) {
     anonymizeUserData(element, userName);
 }
@@ -101,11 +88,12 @@ function appendMessageElementsToContainer(container, messageElements, anonymizeU
     messageElements.forEach((element, index) => {
         const clonedElement = element.cloneNode(true);
         clonedElement.style.backgroundColor = window.getComputedStyle(element).backgroundColor;
-        
+        clonedElement.style.width = "800px";
+
         if (anonymizeUser) {
             anonymizeUserData(clonedElement, userName);
         }
-        
+
         if (anonymizeStylesheet) {
             const style = document.createElement('style');
             style.innerHTML = `
@@ -159,20 +147,66 @@ function appendMessageElementsToContainer(container, messageElements, anonymizeU
             const timestamps = clonedElement.querySelectorAll('.timestamp');
             timestamps.forEach(timestamp => timestamp.remove());
         }
-        
+
         if (useMobileMode) {
             applyMobileModeStyles(clonedElement);
         }
-        
+
         container.appendChild(clonedElement);
     });
 }
+//GOD WILLS IT
+function calculateMaxHeight(messageElements) {
+    const numMessages = messageElements.length;
+    let maxHeight;
+
+    if (numMessages < 10) {
+        maxHeight = '1000px';
+    } else if (numMessages < 40) {
+        maxHeight = '2000px';
+    } else if (numMessages < 70) {
+        maxHeight = '3000px';
+    } else if (numMessages < 100) {
+        maxHeight = '4000px';
+    } else if (numMessages < 130) {
+        maxHeight = '5000px';
+    } else if (numMessages < 160) {
+        maxHeight = '6000px';
+    } else if (numMessages < 190) {
+        maxHeight = '7000px';
+    } else if (numMessages < 220) {
+        maxHeight = '8000px';
+    } else if (numMessages < 250) {
+        maxHeight = '9000px';
+    } else {
+        maxHeight = '10000px'; // Default for 250 or more messages
+    }
+
+    return maxHeight;
+}
+//DEUS LO VULT
+function createGridContainer(messageElements) {
+    const gridContainer = document.createElement('div');
+    gridContainer.style.display = 'flex';
+    gridContainer.style.flexDirection = 'column';
+    gridContainer.style.flexWrap = 'wrap';
+    gridContainer.style.justifyContent = 'space-between';
+    gridContainer.style.maxHeight = calculateMaxHeight(messageElements);
+    gridContainer.style.padding = "15px";
+    return gridContainer;
+}
+
 
 function setCaptureContainerDimensions(captureContainer, chatContainer, format, gridContainer, numColumns) {
     if (format === 'grid') {
-        captureContainer.style.width = useMobileMode ? `${parseInt(mobileWidth) * numColumns + (numColumns - 1) * 10}px` : `${chatContainer.offsetWidth * numColumns}px`;
-        captureContainer.style.height = `${gridContainer.offsetHeight}px`;
-        captureContainer.style.overflow = 'hidden';
+        setTimeout(() => {
+            captureContainer.style.width = `${gridContainer.scrollWidth}px`;
+            captureContainer.style.height = `${gridContainer.scrollHeight}px`;
+            captureContainer.style.overflow = 'hidden';
+
+            console.log(`Grid dimensions: ${numColumns} columns x ${Math.ceil(gridContainer.children.length / numColumns)} rows`);
+            console.log(`Grid size: ${captureContainer.style.width} x ${captureContainer.style.height}`);
+        }, 0);
     } else {
         captureContainer.style.width = useMobileMode ? mobileWidth : `${chatContainer.offsetWidth}px`;
         captureContainer.style.height = 'auto';
@@ -191,12 +225,12 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
         const captureContainer = createCaptureContainer(chatContainer, anonymizeStylesheet);
         const messageElements = getMessageElements(chatContainer, messageRange);
         const userName = anonymizeUser ? getUserName(chatContainer) : '';
-        
+
         createTimestampStyle();
 
         let gridContainer;
         let anonymizedStylesheet = null;
-        
+
         if (format === 'grid') {
             gridContainer = createGridContainer(messageElements);
             const numColumns = Math.ceil(messageElements.length / Math.ceil(Math.sqrt(messageElements.length)));
@@ -207,34 +241,34 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
             appendMessageElementsToContainer(captureContainer, messageElements, anonymizeUser, anonymizeStylesheet, userName);
             setCaptureContainerDimensions(captureContainer, chatContainer, format);
         }
-        
+
         document.body.appendChild(captureContainer);
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
+
         if (format === 'grid') {
             captureContainer.style.height = `${gridContainer.offsetHeight}px`;
         }
-        
+
         const canvas = await html2canvas(captureContainer, {
             backgroundColor: null,
             useCORS: true,
             scale: 1,
             logging: true,
             width: captureContainer.scrollWidth,
-            height: captureContainer.scrollHeight,			
+            height: captureContainer.scrollHeight,
         });
 
         const imgBlob = await new Promise(resolve => {
             canvas.toBlob(resolve, 'image/png');
         });
-        
+
         const link = document.createElement('a');
         link.href = URL.createObjectURL(imgBlob);
         link.download = 'chatlog.png';
         toastr.success('Chat log captured successfully!', 'Success');
         document.body.appendChild(link);
         link.click();
-        
+
         // Remove the anonymized stylesheets from the cloned elements
         if (anonymizeStylesheet) {
             const clonedElements = captureContainer.querySelectorAll('.mes');

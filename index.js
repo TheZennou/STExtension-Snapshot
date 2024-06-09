@@ -194,6 +194,9 @@ function createGridContainer(messageElements) {
     gridContainer.style.justifyContent = 'space-between';
     gridContainer.style.maxHeight = calculateMaxHeight(messageElements);
     gridContainer.style.padding = "15px";
+
+    gridContainer.style.flex = "initial";
+
     return gridContainer;
 }
 
@@ -201,9 +204,8 @@ function createGridContainer(messageElements) {
 function setCaptureContainerDimensions(captureContainer, chatContainer, format, gridContainer, numColumns) {
     if (format === 'grid') {
         setTimeout(() => {
-            captureContainer.style.width = `${gridContainer.scrollWidth}px`;
-            captureContainer.style.height = `${gridContainer.scrollHeight}px`;
-            captureContainer.style.overflow = 'hidden';
+            // captureContainer.style.width = `${gridContainer.offsetWidth}px`;
+            // captureContainer.style.height = `${gridContainer.scrollHeight}px`;
 
             console.log(`Grid dimensions: ${numColumns} columns x ${Math.ceil(gridContainer.children.length / numColumns)} rows`);
             console.log(`Grid size: ${captureContainer.style.width} x ${captureContainer.style.height}`);
@@ -211,7 +213,6 @@ function setCaptureContainerDimensions(captureContainer, chatContainer, format, 
     } else {
         captureContainer.style.width = useMobileMode ? mobileWidth : `${chatContainer.offsetWidth}px`;
         captureContainer.style.height = 'auto';
-        captureContainer.style.overflow = useMobileMode ? 'visible' : 'hidden';
     }
 }
 
@@ -233,10 +234,13 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
         let anonymizedStylesheet = null;
 
         if (format === 'grid') {
+            captureContainer.style.display = "flex";
+
             gridContainer = createGridContainer(messageElements);
             const numColumns = Math.ceil(messageElements.length / Math.ceil(Math.sqrt(messageElements.length)));
             appendMessageElementsToContainer(gridContainer, messageElements, anonymizeUser, anonymizeStylesheet, userName);
             captureContainer.appendChild(gridContainer);
+
             setCaptureContainerDimensions(captureContainer, chatContainer, format, gridContainer, numColumns);
         } else {
             appendMessageElementsToContainer(captureContainer, messageElements, anonymizeUser, anonymizeStylesheet, userName);
@@ -250,13 +254,26 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
             captureContainer.style.height = `${gridContainer.offsetHeight}px`;
         }
 
+        //Debug code
+
+        /*
+        while (document.body.firstChild) {
+            document.body.removeChild(document.body.firstChild);
+        }
+
+        document.body.appendChild(captureContainer);
+        return;
+        */
+
+        //Debug code over
+
         const canvas = await html2canvas(captureContainer, {
-            backgroundColor: null,
+            backgroundColor: captureContainer.style.backgroundColor,
             useCORS: true,
             scale: 1,
             logging: true,
-            width: captureContainer.scrollWidth,
-            height: captureContainer.scrollHeight,
+            width: format === 'grid' ? gridContainer.scrollWidth : captureContainer.scrollWidth,
+            // height: captureContainer.scrollHeight,
         });
 
         const imgBlob = await new Promise(resolve => {

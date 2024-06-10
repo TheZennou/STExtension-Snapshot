@@ -25,11 +25,27 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
     }
 
     //We back them up so we can add them back in later, if we need to
-    const customCssBackup = document.getElementById("custom-style").cloneNode(true);
-    const toggleCssBackup = document.head.querySelector("[href=\"css/toggle-dependent.css\"]")
+    const customCssBackup = document.getElementById("custom-style");
+    const toggleCssBackup = document.head.querySelector("[href=\"css/toggle-dependent.css\"]");
     if (anonymizeStylesheet) {
         document.head.removeChild(document.getElementById("custom-style"));
         document.head.removeChild(document.head.querySelector("[href=\"css/toggle-dependent.css\"]"));
+
+        const style = document.createElement("style");
+        style.id = "snapshot-anonymizer-style";
+        //Hide timestamp, hide buttons, hide the copy paste icon on the corner of <code> tags
+        //Show the token count
+        style.textContent = `
+            small.timestamp, div.mes_buttons, code>.fa-solid.fa-copy.code-copy {
+                display: none !important;
+            }
+
+            div.tokenCounterDisplay {
+                display: block;
+            }
+        `;
+
+        document.head.appendChild(style);
     }
 
     try {
@@ -163,6 +179,7 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
         toastr.error('Failed, Please check the browser console. Common issues are no internet, or CORS policy.');
     } finally {
         if (anonymizeStylesheet && !SNAPSHOT_DEBUG) {
+            document.head.removeChild(document.getElementById("snapshot-anonymizer-style"));
             document.head.appendChild(customCssBackup);
             document.head.appendChild(toggleCssBackup);
         }

@@ -94,7 +94,7 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
                 }
 
                 //If it's a range, we take all of those, closed on both sides
-                if (/^d+-\d+$/.test(messageRange)) {
+                if (/^\d+-\d+$/.test(messageRange)) {
                     const interval = messageRange.split("-").map(s => Number.parseInt(s, 10));
                     return i >= interval[0] && i <= interval[1]
                 }

@@ -56,7 +56,7 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
             //Why yes, I copied all of these from my personal theme, how could you tell?
             containerDiv.style.setProperty("--doc-height", "732 px");
             containerDiv.style.setProperty("--fontScale", "1");
-            containerDiv.style.setProperty("--shieldWidth", "50vw");
+            containerDiv.style.setProperty("--sheldWidth", "50vw");
             containerDiv.style.setProperty("--blurStrength", "1");
             containerDiv.style.setProperty("--shadowWidth", "2");
             containerDiv.style.setProperty("--SmartThemeBodyColor", "rgba(220, 220, 210, 1)");

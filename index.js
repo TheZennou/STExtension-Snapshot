@@ -152,13 +152,42 @@ async function captureChatLog(format = 'regular', messageRange = null, anonymize
         }
 
         await new Promise(resolve => setTimeout(resolve, 1000));
-        const canvas = await html2canvas(containerDiv, {
-            backgroundColor: containerDiv.style.backgroundColor,
-            useCORS: true,
-            scale: 1,
-            logging: true,
-            width: gridDiv.scrollWidth,
-        });
+		const canvas = await html2canvas(containerDiv, {
+			backgroundColor: containerDiv.style.backgroundColor,
+			useCORS: true,
+			scale: 1,
+			logging: true,
+			width: gridDiv.scrollWidth,
+			onclone: (clonedDoc) => { //Total band-aid fix lmao, might work for others, worked for me.
+				const allElements = clonedDoc.body.querySelectorAll('*');
+				allElements.forEach(el => {
+					const style = el.style;
+					
+					for (let i = style.length - 1; i >= 0; i--) {
+						const prop = style[i];
+						const value = style.getPropertyValue(prop);
+						if (value && value.includes('color(')) {
+							style.removeProperty(prop);
+						}
+					}
+					
+					const computedStyle = window.getComputedStyle(el);
+					['color', 'backgroundColor', 'borderColor', 'borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor'].forEach(prop => {
+						const value = computedStyle.getPropertyValue(prop);
+						if (value && value.includes('color(')) {
+							el.style[prop] = 'transparent';
+						}
+					});
+				});
+				
+				const styleSheets = clonedDoc.querySelectorAll('style, link[rel="stylesheet"]');
+				styleSheets.forEach(sheet => {
+					if (sheet.textContent && sheet.textContent.includes('color(')) {
+						sheet.textContent = sheet.textContent.replace(/color\([^)]+\)/g, 'transparent');
+					}
+				});
+			}
+		});
 
         const imgBlob = await new Promise(resolve => {
             canvas.toBlob(resolve, 'image/png');
